@@ -7,5 +7,5 @@ using namespace std;
 class State4: public State{
     public:
         State4() : State("Etat4") {}
-        bool Transition(Automate & automate);
+        bool Transition(Automate & automate, bool isE = false);
 };

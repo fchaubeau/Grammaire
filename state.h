@@ -9,7 +9,7 @@ class State{
     public:
         State(string name="") : name(name){}
         State() {}
-        virtual bool Transition(Automate & automate)=0;
+        virtual bool Transition(Automate & automate, bool isE = false)=0;
     protected:
         string name;
 };

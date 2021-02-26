@@ -4,6 +4,7 @@
 Automate::Automate(){
     this->pile = deque<State*>();
     this->pile.push_back(new State0());
+    this->pile_symboles = deque<Symbole*>();
     this->l = Lexer();
 }
 
@@ -13,8 +14,8 @@ Automate::Automate(Lexer & l){
     this->l = l;
 }
 
-Lexer Automate::GetL(){
-    return this->l;
+Lexer* Automate::GetL(){
+  return &(this->l);
 }
 
 deque<State*> Automate::GetPile(){
@@ -29,6 +30,18 @@ void Automate::pop_back_on_pile(){ //Retire le dernier élément de la pile de l
     this->pile.pop_back();
 }
 
-bool Automate::transitionLastState(){
-    return this->pile.back()->Transition(*this);
+bool Automate::transitionLastState(bool isE){
+    return this->pile.back()->Transition(*this,isE);
+}
+
+void Automate::push_back_on_pile_symboles(Symbole* symbole){
+    this->pile_symboles.push_back(symbole);
+}
+
+void Automate::pop_back_on_pile_symboles(){
+    this->pile_symboles.pop_back();
+}
+
+deque<Symbole*> Automate::GetPileSymboles(){
+    return this->pile_symboles;
 }

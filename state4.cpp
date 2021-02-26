@@ -1,7 +1,36 @@
 #include "state4.h"
+#include "State3.h"
+#include "state2.h"
+#include "state7.h"
 #include <iostream>
 
-bool State4::Transition(Automate & automate) {
+bool State4::Transition(Automate & automate, bool isE) {
     cout << "transition state4" << endl;
-    return true;
+    Lexer* l = automate.GetL();
+    Symbole* s = l->Consulter();
+    s->Affiche();
+    if(isE){
+        State7* state7 = new State7();
+        State* state = dynamic_cast<State*> (state7);
+        automate.push_back_on_pile(&state);
+    }
+    else if(*l->Consulter() == INT){
+        State3* state3 = new State3();
+        State* state = dynamic_cast<State*> (state3);
+        automate.push_back_on_pile(&state);
+        automate.push_back_on_pile_symboles(l->Consulter());
+        l->Avancer();
+    }
+    else if(*l->Consulter() == OPENPAR){
+        State2* state2 = new State2();
+        State* state = dynamic_cast<State*> (state2);
+        automate.push_back_on_pile(&state);
+        automate.push_back_on_pile_symboles(l->Consulter());
+        l->Avancer();
+    }
+    else{
+        return false;
+    }
+    
+    return automate.transitionLastState();
 }
